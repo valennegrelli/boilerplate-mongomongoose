@@ -11,14 +11,32 @@ let Person;
 let personSchema = new mongoose.Schema({
   name: {required: true, type: String},
   age: Number,
-  favoriteFoods: Array,
+  favoriteFoods: [String],
 });
 
-module.exports = mongoose.model("Person", personSchema);
+Person = mongoose.model("Person", personSchema);
 
-const createAndSavePerson = (done) => {
-  done(null /*, data*/);
+const data = {
+  name: "Valentin",
+  age: 20,
+  favoriteFoods: ["crispy soy burgers", "crispy chickpeas"],
 };
+
+function done(err, data) {
+  console.log(err);
+}
+
+const createAndSavePerson = (data, done) => {
+  let person = new Person({
+    name: data.name,
+    age: data.age,
+    favoriteFoods: data.favoriteFoods,
+  });
+
+  person.save(done);
+};
+
+createAndSavePerson(data, done);
 
 const createManyPeople = (arrayOfPeople, done) => {
   done(null /*, data*/);
